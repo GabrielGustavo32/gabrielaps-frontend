@@ -7,27 +7,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // --- PROTEÇÃO DA PÁGINA ---
-        // Esta função verifica o token e redireciona se necessário.
+        
         function verificarLogin() {
             const token = localStorage.getItem('token');
             if (!token) {
                 alert('Acesso negado. Faça o login primeiro.');
-                // Caminho absoluto para garantir que o redirecionamento funcione.
+                
                 window.location.replace('/login.html'); 
             }
         }
         verificarLogin();
 
-        // FUNÇÃO DE LOGOUT FINAL (definida globalmente para todas as páginas usarem)
+       
         function fazerLogout() {
             localStorage.removeItem('token');
             alert('Você saiu do sistema.');
             window.location.replace('/login.html'); 
         }
 
-        // --- CARREGAMENTO DE COMPONENTES ---
-        // Movemos a lógica para o final do <body>, mas definimos a função aqui.
+        
         function carregarComponentes() {
              fetch('menu.html')
                 .then(resp => resp.text())
@@ -40,7 +38,7 @@
         
     </script>
 </head>
-<!-- Chamamos a função de carregamento no body, para garantir que as funções de logout estejam no escopo -->
+
 <body class="bg-light min-vh-100 d-flex flex-column" onload="carregarComponentes()"> 
     <div id="menu"></div>
 

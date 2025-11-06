@@ -11,16 +11,16 @@
         const token = localStorage.getItem('token');
         if (!token) {
             alert('Acesso negado. Faça o login primeiro.');
-            window.location.href = '../login.html'; // Volta para o login
+            window.location.href = '../login.html';
         }
-        // -------------------------
+       
 
-        // Carrega o menu (../ para voltar uma pasta)
+       
         fetch('../menu.html')
             .then(resp => resp.text())
             .then(html => document.getElementById('menu').innerHTML = html);
         
-        // Carrega o rodapé (../ para voltar uma pasta)
+        
         fetch('../rodape.html')
             .then(resp => resp.text())
             .then(html => document.getElementById('rodape').innerHTML = html);
@@ -75,12 +75,12 @@
 
     <script>
         const API_URL = 'https://gabrielaps-backend.onrender.com';
-        let idDoUsuario = null; // Variável para guardar o ID
+        let idDoUsuario = null; 
 
-        // --- FUNÇÃO 1: BUSCAR O ID DA URL E CARREGAR OS DADOS ---
+        
         async function carregarDadosDoUsuario() {
             try {
-                // 1. Pega o ID da URL (Ex: ...?id=12345)
+                
                 const parametros = new URLSearchParams(window.location.search);
                 idDoUsuario = parametros.get('id');
 
@@ -90,7 +90,7 @@
                     return;
                 }
 
-                // 2. Busca os dados desse usuário no backend
+                
                 const response = await fetch(`${API_URL}/usuarios/${idDoUsuario}`);
                 if (!response.ok) {
                     throw new Error('Usuário não encontrado.');
@@ -98,25 +98,25 @@
                 
                 const usuario = await response.json();
 
-                // 3. Preenche o formulário com os dados
+                
                 document.getElementById('id').value = usuario._id;
                 document.getElementById('nome').value = usuario.nome;
                 document.getElementById('email').value = usuario.email;
                 document.getElementById('login').value = usuario.login;
                 document.getElementById('perfil').value = usuario.perfil;
-                // Deixamos a senha em branco de propósito
+                
 
             } catch (error) {
                 alert('Erro ao carregar dados: ' + error.message);
             }
         }
 
-        // --- FUNÇÃO 2: OUVIR O ENVIO DO FORMULÁRIO ---
+        
         const formEditar = document.getElementById('form-editar');
         formEditar.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Impede o recarregamento
+            event.preventDefault(); 
 
-            // 1. Pega os dados do formulário
+            
             const dadosAtualizados = {
                 nome: document.getElementById('nome').value,
                 email: document.getElementById('email').value,
@@ -124,14 +124,14 @@
                 perfil: document.getElementById('perfil').value
             };
             
-            // 2. Só adiciona a senha se ela foi digitada
+            
             const senhaNova = document.getElementById('senha').value;
             if (senhaNova) {
                 dadosAtualizados.senha = senhaNova;
             }
 
             try {
-                // 3. Envia os dados com o método PUT para o backend
+                
                 const response = await fetch(`${API_URL}/usuarios/${idDoUsuario}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -142,7 +142,7 @@
 
                 if (response.ok) {
                     alert('Usuário atualizado com sucesso!');
-                    window.location.href = 'usuario_listar.html'; // Volta para a lista
+                    window.location.href = 'usuario_listar.html'; 
                 } else {
                     alert('Falha ao atualizar: ' + data.message);
                 }
@@ -152,7 +152,7 @@
             }
         });
 
-        // --- RODA A FUNÇÃO 1 QUANDO A PÁGINA CARREGA ---
+        
         document.addEventListener('DOMContentLoaded', carregarDadosDoUsuario);
     </script>
 </body>

@@ -11,16 +11,16 @@
         const token = localStorage.getItem('token');
         if (!token) {
             alert('Acesso negado. Faça o login primeiro.');
-            window.location.href = '../login.html'; // Volta para o login
+            window.location.href = '../login.html'; 
         }
         // -------------------------
 
-        // Carrega o menu (../ para voltar uma pasta)
+        
         fetch('../menu.html')
             .then(resp => resp.text())
             .then(html => document.getElementById('menu').innerHTML = html);
         
-        // Carrega o rodapé (../ para voltar uma pasta)
+        
         fetch('../rodape.html')
             .then(resp => resp.text())
             .then(html => document.getElementById('rodape').innerHTML = html);
@@ -66,16 +66,16 @@
     <div id="rodape"></div>
 
     <script>
-        // URL da API (agora podemos usar caminhos relativos, mas vamos manter o localhost)
+       
         const API_URL = 'https://gabrielaps-backend.onrender.com';
 
-        // --- FUNÇÃO 1: CARREGAR OS USUÁRIOS NA TABELA ---
+        
         async function carregarUsuarios() {
             try {
                 const response = await fetch(`${API_URL}/usuarios`, {
                     method: 'GET',
                     headers: {
-                        // Poderíamos enviar o token para o backend validar, mas vamos simplificar
+                        
                         'Content-Type': 'application/json' 
                     }
                 });
@@ -86,14 +86,14 @@
 
                 const usuarios = await response.json();
                 const tabelaCorpo = document.getElementById('tabela-corpo');
-                tabelaCorpo.innerHTML = ''; // Limpa o "Carregando..."
+                tabelaCorpo.innerHTML = ''; 
 
                 if (usuarios.length === 0) {
                     tabelaCorpo.innerHTML = '<tr><td colspan="5" class="text-center">Nenhum usuário cadastrado.</td></tr>';
                     return;
                 }
 
-                // Preenche a tabela com os dados
+               
                 usuarios.forEach(user => {
                     tabelaCorpo.innerHTML += `
                         <tr>
@@ -110,7 +110,7 @@
             }
         }
 
-        // --- FUNÇÃO 2: EDITAR ---
+        
         function editar() {
             const marcados = document.querySelectorAll('input[name="sel[]"]:checked');
             
@@ -123,15 +123,14 @@
                 return;
             }
             
-            // Pega o ID (value) do único item marcado
+            
             const id = marcados[0].value;
             
-            // Redireciona para a página de edição (que vamos criar)
-            // passando o ID pela URL
+            
             window.location.href = `usuario_editar.html?id=${id}`; 
         }
 
-        // --- FUNÇÃO 3: EXCLUIR ---
+       
         async function excluir() {
             const marcados = document.querySelectorAll('input[name="sel[]"]:checked');
             
@@ -140,10 +139,9 @@
                 return;
             }
             
-            // Pega o ID do PRIMEIRO marcado (vamos fazer exclusão de um por um)
-            // Um sistema real faria um loop ou mandaria um array de IDs
+            
             const id = marcados[0].value;
-            const nome = marcados[0].closest('tr').cells[2].innerText; // Pega o nome na tabela
+            const nome = marcados[0].closest('tr').cells[2].innerText; 
 
             if (confirm(`Tem certeza que deseja excluir o usuário "${nome}" (ID: ${id})?`)) {
                 try {
@@ -155,7 +153,7 @@
 
                     if (response.ok) {
                         alert('Usuário excluído com sucesso!');
-                        carregarUsuarios(); // Recarrega a tabela
+                        carregarUsuarios(); 
                     } else {
                         alert('Falha ao excluir: ' + data.message);
                     }
@@ -165,7 +163,7 @@
             }
         }
 
-        // --- RODA A FUNÇÃO 1 QUANDO A PÁGINA TERMINA DE CARREGAR ---
+       
         document.addEventListener('DOMContentLoaded', carregarUsuarios);
     </script>
 </body>
