@@ -32,7 +32,8 @@
     function fazerLogout() {
         localStorage.removeItem('token');
         alert('Você saiu do sistema.');
-        // CORREÇÃO AQUI: Garante que o logout funciona de qualquer pasta
-        window.location.href = '../login.html'; 
+        // CORREÇÃO FINAL: Usa o caminho ABSOLUTO (/login.html) para garantir que volte à raiz
+        // do site online, independentemente de onde o usuário estiver.
+        window.location.href = '/login.html'; 
     }
 </script>
