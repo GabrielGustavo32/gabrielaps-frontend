@@ -1,22 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container-fluid">
-        <a class="navbar-brand" href="principal.html">Gabrielaps</a>
+        <a class="navbar-brand" href="../principal.html">Gabrielaps</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="principal.html">Início</a>
+                    <a class="nav-link active" href="../principal.html">Início</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="cadastrosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Cadastros
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="cadastrosDropdown">
-                        <li><a class="dropdown-item" href="usuarios/usuario_listar.html">Usuários</a></li>
-                        <li><a class="dropdown-item" href="produtos/produto_listar.html">Produtos</a></li>
-                        <li><a class="dropdown-item" href="fornecedores/fornecedor_listar.html">Fornecedores</a></li>
+                        <li><a class="dropdown-item" href="../usuarios/usuario_listar.html">Usuários</a></li>
+                        <li><a class="dropdown-item" href="../produtos/produto_listar.html">Produtos</a></li>
+                        <li><a class="dropdown-item" href="../fornecedores/fornecedor_listar.html">Fornecedores</a></li>
                     </ul>
                 </li>
                 
@@ -32,6 +32,7 @@
     function fazerLogout() {
         localStorage.removeItem('token');
         alert('Você saiu do sistema.');
-        window.location.href = 'login.html';
+        // CORREÇÃO AQUI: Garante que o logout funciona de qualquer pasta
+        window.location.href = '../login.html'; 
     }
 </script>
