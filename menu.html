@@ -32,8 +32,8 @@
     function fazerLogout() {
         localStorage.removeItem('token');
         alert('Você saiu do sistema.');
-        // CORREÇÃO FINAL: Usa o caminho ABSOLUTO (/login.html) para garantir que volte à raiz
-        // do site online, independentemente de onde o usuário estiver.
-        window.location.href = '/login.html'; 
+        // CORREÇÃO FINAL E ROBUSTA: Usa o caminho ABSOLUTO e window.location.replace()
+        // O /login.html aponta diretamente para a raiz do seu site online.
+        window.location.replace('/login.html'); 
     }
 </script>
