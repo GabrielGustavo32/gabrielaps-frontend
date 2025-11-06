@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Gabrielaps</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Carrega o cabecalho
+        fetch('cabecalho.html')
+            .then(resp => resp.text())
+            .then(html => document.getElementById('menu').innerHTML = html);
+        // Carrega o rodapé
+        fetch('rodape.html')
+            .then(resp => resp.text())
+            .then(html => document.getElementById('rodape').innerHTML = html);
+    </script>
+</head>
+<body class="bg-light min-vh-100 d-flex flex-column">
+    <div id="menu"></div>
+
+    <main id="principal" class="container-fluid flex-fill d-flex align-items-center justify-content-center">
+        <div class="card shadow p-4" style="max-width: 360px; width: 100%;">
+            <h2 class="text-center mb-4">Login</h2>
+
+            <form id="form-login" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label text-success">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="senha" class="form-label text-success">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" required>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Entrar</button>
+                    <br>
+                    <a href="usuarios/usuario_incluir.html" class="btn btn-outline-success">
+                        Cadastrar Acesso
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div id="rodape"></div>
+
+    <script>
+        // Define a URL do seu backend (que está rodando AGORA no seu VS Code)
+        const API_URL = 'http://localhost:3000';
+
+        // 1. Pega o formulário pelo ID que demos a ele
+        const formLogin = document.getElementById('form-login');
+
+        // 2. Adiciona um "ouvinte" ao evento de 'submit' (clique no botão 'Entrar')
+        formLogin.addEventListener('submit', async (event) => {
+            
+            // 3. IMPEDE o comportamento padrão do HTML (que é recarregar a página)
+            event.preventDefault(); 
+            
+            // 4. Pega os valores digitados nos campos
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            // 5. Tenta fazer a "ligação" (fetch) para o seu backend
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Avisa que estamos enviando JSON
+                    },
+                    // Converte os dados para o formato JSON que o backend espera
+                    body: JSON.stringify({ email: email, senha: senha }) 
+                });
+
+                // Pega a resposta do servidor (mesmo se for um erro)
+                const data = await response.json(); 
+
+                if (response.ok) {
+                    // SUCESSO! O backend disse "OK" (status 200)
+                    alert('Login bem-sucedido!');
+                    
+                    // Guarda o "crachá" (token) no navegador
+                    localStorage.setItem('token', data.token); 
+                    
+                    // Redireciona para a página principal
+                    // (Assumindo que principal.html está na mesma pasta)
+                    window.location.href = 'principal.html'; 
+                } else {
+                    // FALHA (Ex: senha errada, usuário não existe)
+                    // O backend respondeu com um erro (status 401, 404, etc.)
+                    alert('Falha no login: ' + data.message);
+                }
+            } catch (error) {
+                // ERRO DE REDE (Ex: O servidor backend (node index.js) está desligado)
+                console.error('Erro ao conectar com a API:', error);
+                alert('Erro ao tentar conectar com o servidor. Verifique se o backend está rodando.');
+            }
+        });
+    </script>
+
+</body>
+</html>
