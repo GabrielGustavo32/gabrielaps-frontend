@@ -27,13 +27,3 @@
         </div>
     </div>
 </nav>
-
-<script>
-    function fazerLogout() {
-        localStorage.removeItem('token');
-        alert('Você saiu do sistema.');
-        // CORREÇÃO FINAL E ROBUSTA: Usa o caminho ABSOLUTO e window.location.replace()
-        // O /login.html aponta diretamente para a raiz do seu site online.
-        window.location.replace('/login.html'); 
-    }
-</script>
